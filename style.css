@@ -177,12 +177,24 @@ mark:hover {
 #hero-name pre {
   margin: 0;
   font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
-  font-size: 9px;
+  /* Fluid scaling: minimum 3px, preferred is relative to screen width, maximum 9px */
+  font-size: clamp(3px, 1.3vw, 9px); 
   line-height: 1;
   letter-spacing: 0;
   color: var(--text);
   white-space: pre;
   transition: var(--transition);
+}
+
+.bmsce-logo, .rvce-logo, .rkv-logo {
+  font-family: 'JetBrains Mono', monospace;
+  /* Fluid scaling: minimum 1.5px, preferred relative to screen width, max 4px */
+  font-size: clamp(1.5px, 0.6vw, 4px); 
+  line-height: 1;
+  color: var(--accent);
+  white-space: pre;
+  overflow: hidden;
+  text-align: center;
 }
 
 #hero-name:hover pre {
@@ -350,18 +362,6 @@ section {
   color: var(--accent);
 }
 
-.bmsce-logo {
-  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
-  font-size: 5px;
-  line-height: 1;
-  letter-spacing: 0;
-  white-space: pre;
-  color: var(--text-dim);
-  margin: 0;
-  max-width: 100%;
-  overflow-x: auto;
-  transition: color .3s ease;
-}
 
 .edu-cell:hover .bmsce-logo {
   color: var(--accent);
@@ -594,6 +594,139 @@ footer .reload:hover {
   transition: opacity 1.5s ease-out;
 }
 
+/* ---------------- RTOS BOOT SCREEN ---------------- */
+.rtos-boot-layer {
+  position: fixed;
+  inset: 0;
+  background-color: #05070a; /* Deep terminal black */
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent);
+  transition: opacity 0.8s ease-out;
+  overflow: hidden;
+}
+
+/* Old CRT Monitor Scanlines */
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#rtos-loading-wrapper {
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  z-index: 2;
+}
+
+#ascii-art {
+  font-size: clamp(8px, 1.5vw, 14px);
+  line-height: 1.2;
+  color: var(--text-dim);
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px var(--text-dim);
+  font-weight: bold;
+}
+
+#rtos-logs {
+  font-size: 13px;
+  color: var(--text-dimmer);
+  white-space: pre-wrap;
+  text-align: left;
+  line-height: 1.5;
+}
+
+/* The RTOS UI */
+#rtos-main {
+  text-align: center;
+  font-size: clamp(3rem, 8vw, 7rem); /* Scales with screen size */
+  font-weight: 800;
+  line-height: 1;
+  z-index: 2;
+  text-shadow: 4px 4px 0px rgba(125, 211, 252, 0.15); /* Blocky retro shadow */
+  letter-spacing: -2px;
+}
+
+.rtos-row {
+  display: flex;
+  justify-content: center;
+  gap: 2vw;
+  margin-bottom: 10px;
+}
+
+.rtos-char {
+  display: flex;
+  cursor: crosshair;
+  border: 2px solid transparent;
+  padding: 0 10px;
+  background: transparent;
+}
+
+.rtos-char:hover {
+  background: var(--accent-soft);
+  border: 2px dashed var(--accent);
+  box-shadow: 0 0 20px var(--accent-soft);
+}
+
+.rtos-char .init {
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent);
+  transition: color 0.1s;
+}
+
+.rtos-char .full {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  /* steps() creates a frame-by-frame pixelated typing effect */
+  transition: max-width 0.3s steps(15, end), opacity 0.2s step-end;
+  display: inline-block;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+.rtos-char:hover .full {
+  max-width: 500px;
+  opacity: 1;
+}
+
+.rtos-char:hover .init {
+  color: var(--text);
+  text-shadow: none;
+}
+
+.boot-prompt {
+  margin-top: 60px;
+  font-size: 16px;
+  color: #27c93f; /* Hacker terminal green */
+  font-weight: bold;
+  cursor: pointer;
+  text-shadow: 0 0 8px rgba(39, 201, 63, 0.5);
+  letter-spacing: 2px;
+}
+
+.blinking {
+  animation: boot-blink 1s step-end infinite;
+}
+
+@keyframes boot-blink { 50% { opacity: 0; } }
+
+body.booting .wrap,
+body.booting .topbar,
+body.booting .breadcrumb,
+body.booting .progress {
+  display: none;
+}
+
 @media (max-width: 600px) {
   .wrap {
     padding: 80px 18px 120px;
@@ -623,5 +756,207 @@ footer .reload:hover {
 
   .tornado-vortex {
     animation: none;
+  }
+}
+
+/* ---------------- CUSTOM CYBER CURSOR ---------------- */
+/* Hide the default cursor everywhere */
+* {
+  cursor: none !important;
+}
+
+#custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent); /* Automatically adapts to theme changes! */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none; /* Lets you click through it */
+  z-index: 999999;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#custom-cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--accent); /* Automatically adapts to theme changes! */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 999998;
+  /* The slight transition delay creates the smooth trailing effect */
+  transition: top 0.1s ease-out, left 0.1s ease-out, border-color 0.3s ease, width 0.2s, height 0.2s;
+}
+
+/* 
+  When hovering over a link or button, we'll add a 'hovering' class to the body.
+  This snaps the outer ring down to a tight, solid target.
+*/
+body.hovering #custom-cursor {
+  transform: translate(-50%, -50%) scale(0); /* Hide the inner dot */
+}
+
+body.hovering #custom-cursor-trail {
+  width: 40px;
+  height: 40px;
+  background-color: var(--accent-soft);
+  border: 2px dashed var(--accent);
+  box-shadow: 0 0 15px var(--accent-soft);
+  animation: spin-cursor 4s linear infinite;
+}
+
+/* --- CURSOR ASCII AURA --- */
+.cursor-aura-particle {
+  position: fixed;
+  pointer-events: none;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: bold;
+  font-size: 14px;
+  z-index: 999990; /* Just underneath the primary custom cursor */
+  animation: aura-fade 1s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+  text-shadow: 0 0 8px var(--accent);
+}
+
+@keyframes aura-fade {
+  0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.4); }
+}
+
+/* --- ADJUSTMENTS FOR FIGLET RTOS FONT --- */
+#rtos-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.rtos-char {
+  display: flex;
+  align-items: center; /* Horizontally centers the expanded text with the ASCII block */
+}
+
+.rtos-char pre.init {
+  margin: 0;
+  font-size: clamp(6px, 1.2vw, 14px); /* Scales the ASCII art smoothly */
+  line-height: 1.1;
+  color: var(--accent);
+  text-shadow: 0 0 10px var(--accent);
+  transition: color 0.2s;
+  text-align: left;
+}
+
+.rtos-char span.full {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.4s steps(12, end), opacity 0.3s step-end;
+  display: inline-block;
+  color: var(--text);
+  font-size: clamp(2rem, 5vw, 4.5rem); /* Matches height of the ASCII block */
+  font-weight: 800;
+  letter-spacing: -3px;
+}
+
+.rtos-char:hover pre.init {
+  color: var(--text);
+  text-shadow: none;
+}
+
+.rtos-char:hover span.full {
+  max-width: 400px;
+  opacity: 1;
+  margin-left: 10px; /* Space between ASCII and the rest of the word */
+}
+
+/* ---------------- INTERACTIVE TERMINAL ---------------- */
+#interactive-terminal {
+  margin-top: 20px;
+  margin-bottom: 26px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  max-width: 100%;
+  overflow-x: hidden;
+  /* Removed max-height and overflow-y so the whole page acts as the terminal */
+}
+
+#terminal-history {
+  color: var(--text-dim);
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.history-line {
+  margin-bottom: 4px;
+}
+
+.history-output {
+  color: var(--text);
+  margin-bottom: 16px;
+  padding-left: 12px;
+  border-left: 2px solid var(--accent);
+}
+
+#active-prompt-line {
+  position: relative;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#cmd-text {
+  color: var(--text);
+  white-space: pre;
+}
+
+/* Perfected invisible input to stop native browser scrolling jumps */
+#cmd-input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  color: transparent;
+}
+
+/* --- THE LOCK STATE --- */
+/* When this class is on the body, the rest of the site is invisible */
+body.terminal-locked #hero-name,
+body.terminal-locked .hero-role,
+body.terminal-locked .lede,
+body.terminal-locked .links,
+body.terminal-locked section:not(#intro),
+body.terminal-locked footer,
+body.terminal-locked .breadcrumb,
+body.terminal-locked .progress {
+  display: none;
+}
+
+/* Animation triggered by JS when unlocked */
+@keyframes terminalReveal {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin-cursor {
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Disable custom cursor on mobile/touch devices */
+@media (hover: none) and (pointer: coarse) {
+  #custom-cursor, #custom-cursor-trail {
+    display: none !important;
+  }
+  * {
+    cursor: auto !important;
   }
 }

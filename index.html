@@ -7,6 +7,78 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Custom Cyber Cursor -->
+<div id="custom-cursor"></div>
+<div id="custom-cursor-trail"></div>
+
+
+<!-- RTOS Boot Screen Overlay -->
+<div id="rtos-boot" class="rtos-boot-layer">
+  <!-- CRT Monitor Overlay -->
+  <div class="scanlines"></div>
+  
+  <!-- Terminal Boot Phase -->
+  <div id="rtos-loading-wrapper">
+    <pre id="ascii-art">
+ _____   _______   ____    _____ 
+|  __ \ |_______| / __ \  / ____|
+| |__) )| |__    | |  | || (___  
+|  _  / |  __|   | |  | | \___ \ 
+| |     | |      | |__| | ____) |
+|_|     |_|       \____/ |_____/ 
+=================================
+    </pre>
+    <div id="rtos-logs"></div>
+  </div>
+
+  <!-- Interactive OS Phase -->
+  <div id="rtos-main" style="display: none;">
+    <div class="rtos-row">
+      <div class="rtos-char">
+        <pre class="init">
+ ____  
+|  _ \ 
+| |_) )
+|  __/ 
+| | 
+|_|  </pre>
+        <span class="full">ORT_</span>
+      </div>
+      <div class="rtos-char">
+        <pre class="init">
+ _____ 
+|_____|
+| |__
+|  __|
+| |  
+|_|  </pre>
+        <span class="full">OLIO_</span>
+      </div>
+    </div>
+    <div class="rtos-row">
+      <div class="rtos-char">
+        <pre class="init">
+  ___  
+ / _ \ 
+| | | |
+| |_| |
+ \___/ </pre>
+        <span class="full">PERATING_</span>
+      </div>
+      <div class="rtos-char">
+        <pre class="init">
+ ____  
+/ ___| 
+\___ \ 
+ ___) |
+|____/ </pre>
+        <span class="full">YSTEM_</span>
+      </div>
+    </div>
+    <div class="boot-prompt blinking">[ SYSTEM READY : PRESS ENTER TO INITIATE GUI ]</div>
+  </div>
+</div>
+
 
 <div class="topbar">
   <div class="dots"><span></span><span></span><span></span></div>
@@ -27,8 +99,14 @@
 
   <!-- HERO -->
   <section id="intro">
-    <div class="prompt-line"><span class="user">ravi@teja</span> ~ % ./portfolio<span class="cursor"></span></div>
-    <div id="hero-name" title="click me"></div>
+<div id="interactive-terminal">
+  <div id="terminal-history"></div>
+  <div class="prompt-line" id="active-prompt-line">
+    <span class="user">ravi@teja</span> ~ % <span id="cmd-text"></span><span class="cursor"></span>
+    <!-- Invisible input handles mobile keyboards and native backspacing -->
+    <input type="text" id="cmd-input" autocomplete="off" spellcheck="false" autofocus>
+  </div>
+</div>    <div id="hero-name" title="click me"></div>
     <div class="hero-role"><mark id="roleTag">software engineer</mark></div>
 
     <div class="lede">
@@ -53,7 +131,7 @@
         <div class="job-meta">HPE · MAR 2026–PRESENT</div>
       </div>
       <div class="job-desc">A 2-replica active/passive Jenkins setup on Kubernetes that survives a node dying. Leader election runs on a Kubernetes Lease object, state lives on a shared PVC gated by an is_leader file, and every Helm upgrade deliberately flips leadership — so failover isn't just designed, it's proven on every deploy.</div>
-      <a class="job-link" href="https://github.com/Ravi-Teja-S" target="_blank" rel="noopener"><span class="arrow">▸</span>view on github</a>
+      <a class="job-link" href="https://github.com/Nischay912/Jenkins_HA_K8s" target="_blank" rel="noopener"><span class="arrow">▸</span>view on github</a>
       <hr class="divider">
     </div>
 
@@ -136,9 +214,10 @@
     </div>
   </section>
 
-  <!-- EDUCATION -->
+ <!-- EDUCATION -->
   <section id="education">
     <div class="section-label">// education</div>
+    
     <div class="row">
       <div class="yr">2023–2027</div>
       <div class="edu-cell" id="bmsceCell" title="click to reveal the crest">
@@ -146,16 +225,18 @@
         <div class="sub">B.E., Information Science & Engineering — CGPA 9.75</div>
       </div>
     </div>
+    
     <div class="row">
       <div class="yr">2019</div>
-      <div>
+      <div class="edu-cell" id="rvceCell" title="click to reveal the crest">
         <div class="what">RV PU College</div>
         <div class="sub">Class XII, Karnataka State Board — 96%</div>
       </div>
     </div>
+    
     <div class="row">
       <div class="yr">2017</div>
-      <div>
+      <div class="edu-cell" id="rkvCell" title="click to reveal the crest">
         <div class="what">Sri Ramakrishna Vidyashala</div>
         <div class="sub">Class X, Karnataka State Board — 97.6%</div>
       </div>
