@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ravi Teja S — Portfolio</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ravi Teja S — Portfolio</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <!-- Custom Cyber Cursor -->
-<div id="custom-cursor"></div>
-<div id="custom-cursor-trail"></div>
+  <div id="custom-cursor"></div>
+  <div id="custom-cursor-trail"></div>
 
 
-<!-- RTOS Boot Screen Overlay -->
-<div id="rtos-boot" class="rtos-boot-layer">
-  <!-- CRT Monitor Overlay -->
-  <div class="scanlines"></div>
-  
-  <!-- Terminal Boot Phase -->
-  <div id="rtos-loading-wrapper">
-    <pre id="ascii-art">
+  <!-- RTOS Boot Screen Overlay -->
+  <div id="rtos-boot" class="rtos-boot-layer">
+    <!-- CRT Monitor Overlay -->
+    <div class="scanlines"></div>
+
+    <!-- Terminal Boot Phase -->
+    <div id="rtos-loading-wrapper">
+      <pre id="ascii-art">
  _____   _______   ____    _____ 
 |  __ \ |_______| / __ \  / ____|
 | |__) )| |__    | |  | || (___  
@@ -28,257 +30,321 @@
 |_|     |_|       \____/ |_____/ 
 =================================
     </pre>
-    <div id="rtos-logs"></div>
-  </div>
+      <div id="rtos-logs"></div>
+    </div>
 
-  <!-- Interactive OS Phase -->
-  <div id="rtos-main" style="display: none;">
-    <div class="rtos-row">
-      <div class="rtos-char">
-        <pre class="init">
+    <!-- Interactive OS Phase -->
+    <div id="rtos-main" style="display: none;">
+      <div class="rtos-row">
+        <div class="rtos-char">
+          <pre class="init">
  ____  
 |  _ \ 
 | |_) )
 |  __/ 
 | | 
 |_|  </pre>
-        <span class="full">ORT_</span>
-      </div>
-      <div class="rtos-char">
-        <pre class="init">
+          <span class="full">ORT_</span>
+        </div>
+        <div class="rtos-char">
+          <pre class="init">
  _____ 
 |_____|
 | |__
 |  __|
 | |  
 |_|  </pre>
-        <span class="full">OLIO_</span>
+          <span class="full">OLIO_</span>
+        </div>
       </div>
-    </div>
-    <div class="rtos-row">
-      <div class="rtos-char">
-        <pre class="init">
+      <div class="rtos-row">
+        <div class="rtos-char">
+          <pre class="init">
   ___  
  / _ \ 
 | | | |
 | |_| |
  \___/ </pre>
-        <span class="full">PERATING_</span>
-      </div>
-      <div class="rtos-char">
-        <pre class="init">
+          <span class="full">PERATING_</span>
+        </div>
+        <div class="rtos-char">
+          <pre class="init">
  ____  
 / ___| 
 \___ \ 
  ___) |
 |____/ </pre>
-        <span class="full">YSTEM_</span>
-      </div>
-    </div>
-    <div class="boot-prompt blinking">[ SYSTEM READY : PRESS ENTER TO INITIATE GUI ]</div>
-  </div>
-</div>
-
-
-<div class="topbar">
-  <div class="dots"><span></span><span></span><span></span></div>
-  <div class="path">ravi@teja — portfolio</div>
-  <div class="hint">⌘ style ref: sergzorin.com</div>
-</div>
-
-<div class="pet-layer" id="petLayer"></div>
-
-<!-- Interactive overlays -->
-<div id="reboot-terminal">
-  <div class="sys-msg" id="reboot-sys-msg">SYSTEM OFFLINE. AWAITING COMMAND.</div>
-  > <span id="reboot-input"></span><span class="cursor" style="background:#27c93f;"></span>
-</div>
-<canvas id="matrix-canvas"></canvas>
-
-<div class="wrap">
-
-  <!-- HERO -->
-  <section id="intro">
-<div id="interactive-terminal">
-  <div id="terminal-history"></div>
-  <div class="prompt-line" id="active-prompt-line">
-    <span class="user">ravi@teja</span> ~ % <span id="cmd-text"></span><span class="cursor"></span>
-    <!-- Invisible input handles mobile keyboards and native backspacing -->
-    <input type="text" id="cmd-input" autocomplete="off" spellcheck="false" autofocus>
-  </div>
-</div>    <div id="hero-name" title="click me"></div>
-    <div class="hero-role"><mark id="roleTag">software engineer</mark></div>
-
-    <div class="lede">
-      <p>Final-year engineering student, currently interning at <mark>HPE</mark>, where I design <mark>high-availability infrastructure for Jenkins on Kubernetes</mark> — leader election, failover, the parts that keep a CI/CD system alive when a node doesn't.</p>
-      <p>Outside that I build ML pipelines and small products end to end: a scheme-matching assistant for government benefits, a hotspot model for parking violations, a visualizer that makes an encryption algorithm easy to watch happen.</p>
-    </div>
-
-    <div class="links">
-      <a href="mailto:ravithejatheja03@gmail.com">email</a>
-      <a href="https://github.com/Ravi-Teja-S" target="_blank" rel="noopener">github</a>
-      <a href="https://linkedin.com/in/ravi-teja-satrasala" target="_blank" rel="noopener">linkedin</a>
-    </div>
-  </section>
-
-  <!-- SELECTED WORK -->
-  <section id="work">
-    <div class="section-label">// my projects</div>
-
-    <div class="job">
-      <div class="job-head">
-        <div class="job-title"><span class="job-num">01</span>Jenkins High Availability on Kubernetes</div>
-        <div class="job-meta">HPE · MAR 2026–PRESENT</div>
-      </div>
-      <div class="job-desc">A 2-replica active/passive Jenkins setup on Kubernetes that survives a node dying. Leader election runs on a Kubernetes Lease object, state lives on a shared PVC gated by an is_leader file, and every Helm upgrade deliberately flips leadership — so failover isn't just designed, it's proven on every deploy.</div>
-      <!-- PROJECT IMAGE PLACEHOLDER -->
-        <div class="job-image-wrapper">
-          <img src="./assets/jenkins.jpg" alt="Jenkins HA Architecture" class="job-image">
-          <div class="job-image-overlay"></div>
+          <span class="full">YSTEM_</span>
         </div>
-      <a class="job-link" href="https://github.com/Nischay912/Jenkins_HA_K8s" target="_blank" rel="noopener"><span class="arrow">▸</span>view on github</a>
-      <hr class="divider">
-    </div>
-
-    <div class="job">
-      <div class="job-head">
-        <div class="job-title"><span class="job-num">02</span>Yojana Saathi</div>
-        <div class="job-meta">PERSONAL · DEC 2025–PRESENT</div>
       </div>
-      <div class="job-desc">India has thousands of government schemes and no easy way to know which ones apply to you. Yojana Saathi fixes that with a multilingual chatbot for eligibility and applications, backed by vector search over a scheme database so recommendations are actually relevant, not keyword-matched.</div>
-      <!-- PROJECT IMAGE PLACEHOLDER -->
-        <div class="job-image-wrapper">
+      <div class="boot-prompt blinking">[ SYSTEM READY : PRESS ENTER TO INITIATE GUI ]</div>
+    </div>
+  </div>
+
+
+  <div class="topbar">
+    <div class="dots"><span></span><span></span><span></span></div>
+    <div class="path">ravi@teja — portfolio</div>
+    <div class="hint">⌘ style ref: sergzorin.com</div>
+  </div>
+
+  <div class="pet-layer" id="petLayer"></div>
+
+  <!-- Interactive overlays -->
+  <div id="reboot-terminal">
+    <div class="sys-msg" id="reboot-sys-msg">SYSTEM OFFLINE. AWAITING COMMAND.</div>
+    > <span id="reboot-input"></span><span class="cursor" style="background:#27c93f;"></span>
+  </div>
+  <canvas id="matrix-canvas"></canvas>
+
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section id="intro">
+      <div id="interactive-terminal">
+        <div id="terminal-history"></div>
+        <div class="prompt-line" id="active-prompt-line">
+          <span class="user">ravi@teja</span> ~ % <span id="cmd-text"></span><span class="cursor"></span>
+          <!-- Invisible input handles mobile keyboards and native backspacing -->
+          <input type="text" id="cmd-input" autocomplete="off" spellcheck="false" autofocus>
+        </div>
+      </div>
+      <div id="hero-name" title="click me"></div>
+      <div class="hero-role"><mark id="roleTag">software engineer</mark></div>
+
+      <div class="lede">
+        <p>Final-year engineering student, currently interning at <mark>HPE</mark>, where I design
+          <mark>high-availability infrastructure for Jenkins on Kubernetes</mark> — leader election, failover, the parts
+          that keep a CI/CD system alive when a node doesn't.
+        </p>
+        <p>Outside that I build ML pipelines and small products end to end: a scheme-matching assistant for government
+          benefits, a hotspot model for parking violations, a visualizer that makes an encryption algorithm easy to
+          watch happen.</p>
+      </div>
+
+      <div class="links">
+        <a href="mailto:ravithejatheja03@gmail.com">email</a>
+        <a href="https://github.com/Ravi-Teja-S" target="_blank" rel="noopener">github</a>
+        <a href="https://linkedin.com/in/ravi-teja-satrasala" target="_blank" rel="noopener">linkedin</a>
+      </div>
+    </section>
+
+    <!-- SELECTED WORK -->
+    <section id="work">
+      <div class="section-label">// my projects</div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="job-title"><span class="job-num">01</span>Jenkins High Availability on Kubernetes</div>
+          <div class="job-meta">HPE · MAR 2026–PRESENT</div>
+        </div>
+        <div class="job-desc">A 2-replica active/passive Jenkins setup on Kubernetes that survives a node dying. Leader
+          election runs on a Kubernetes Lease object, state lives on a shared PVC gated by an is_leader file, and every
+          Helm upgrade deliberately flips leadership — so failover isn't just designed, it's proven on every deploy.
+        </div>
+        
+        <!-- PROJECT IMAGE PLACEHOLDER -->
+        <a href="https://github.com/Nischay912/Jenkins_HA_K8s" class="job-image-wrapper" target="_blank"
+            rel="noopener noreferrer">
+
+            <img src="./assets/jenkins.jpg" alt="jenkins-ha" class="job-image">
+
+            <div class="job-image-overlay"></div>
+
+          </a>
+        <a class="job-link" href="https://github.com/Nischay912/Jenkins_HA_K8s" target="_blank" rel="noopener"><span
+            class="arrow">▸</span>view on github</a>
+        <hr class="divider">
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="job-title"><span class="job-num">02</span>Yojana Saathi</div>
+          <div class="job-meta">PERSONAL · DEC 2025–PRESENT</div>
+        </div>
+        <div class="job-desc">India has thousands of government schemes and no easy way to know which ones apply to you.
+          Yojana Saathi fixes that with a multilingual chatbot for eligibility and applications, backed by vector search
+          over a scheme database so recommendations are actually relevant, not keyword-matched.</div>
+
+        <!-- PROJECT IMAGE PLACEHOLDER -->
+        <a href="https://yojana-saathi-vajx.vercel.app/" class="job-image-wrapper" target="_blank"
+          rel="noopener noreferrer">
+
           <img src="./assets/yojana-saathi.png" alt="yojana-saathi" class="job-image">
+
           <div class="job-image-overlay"></div>
-        </div>
-      <a class="job-link" href="https://github.com/Ravi-Teja-S/yojana-saathi" target="_blank" rel="noopener"><span class="arrow">▸</span>view on github</a>
-      <hr class="divider">
-    </div>
 
+        </a>
 
-    <div class="job">
-      <div class="job-head">
-        <div class="job-title"><span class="job-num">04</span>Blowfish Visualizer</div>
-        <div class="job-meta">PERSONAL · AUG–OCT 2025</div>
+        <a class="job-link" href="https://github.com/Ravi-Teja-S/yojana-saathi" target="_blank" rel="noopener"><span
+            class="arrow">▸</span>view on github</a>
+        <hr class="divider">
       </div>
-      <div class="job-desc">Blowfish encryption is usually taught as equations on a slide. This turns every round — key expansion, Feistel rounds, subkey mixing — into something you can watch happen, step by step, instead of just reading about.</div>
-      <!-- PROJECT IMAGE PLACEHOLDER -->
-        <div class="job-image-wrapper">
-          <img src="./assets/blowfish.png" alt="Blowfish_Visualizer" class="job-image">
+
+
+      <div class="job">
+        <div class="job-head">
+          <div class="job-title"><span class="job-num">04</span>Blowfish Visualizer</div>
+          <div class="job-meta">PERSONAL · AUG–OCT 2025</div>
+        </div>
+        <div class="job-desc">Blowfish encryption is usually taught as equations on a slide. This turns every round —
+          key expansion, Feistel rounds, subkey mixing — into something you can watch happen, step by step, instead of
+          just reading about.</div>
+
+        <!-- PROJECT IMAGE PLACEHOLDER -->
+        <a href="https://blowfish-visualizer.streamlit.app/" class="job-image-wrapper" target="_blank"
+          rel="noopener noreferrer">
+
+          <img src="./assets/blowfish.png" alt="blowfish" class="job-image">
+
           <div class="job-image-overlay"></div>
+
+        </a>
+        <a class="job-link" href="https://github.com/Ravi-Teja-S/Blowfish_Visualizer" target="_blank"
+          rel="noopener"><span class="arrow">▸</span>view on github</a>
+        <hr class="divider">
+      </div>
+
+      <div class="job">
+        <div class="job-head">
+          <div class="job-title"><span class="job-num">05</span>Traditional Arts of India</div>
+          <div class="job-meta">PERSONAL · JUN–AUG 2025</div>
         </div>
-      <a class="job-link" href="https://github.com/Ravi-Teja-S/Blowfish_Visualizer" target="_blank" rel="noopener"><span class="arrow">▸</span>view on github</a>
-      <hr class="divider">
-    </div>
+        <div class="job-desc">A real shop needed a real web presence — built end to end with a MySQL backend for
+          inventory and orders, not just a static catalog. My first full-stack project, front door to database.</div>
 
-    <div class="job">
-      <div class="job-head">
-        <div class="job-title"><span class="job-num">05</span>Traditional Arts of India</div>
-        <div class="job-meta">PERSONAL · JUN–AUG 2025</div>
+        <!-- PROJECT IMAGE PLACEHOLDER -->
+        <a href="https://traditional-arts-of-india.lovestoblog.com" class="job-image-wrapper" target="_blank"
+            rel="noopener noreferrer">
+
+            <img src="./assets/traditional-arts.png" alt="traditional-arts-of-india" class="job-image">
+
+            <div class="job-image-overlay"></div>
+
+          </a>
+        <a class="job-link" href="https://github.com/Ravi-Teja-S/First-web-project" target="_blank" rel="noopener"><span
+            class="arrow">▸</span>view on github</a>
       </div>
-      <div class="job-desc">A real shop needed a real web presence — built end to end with a MySQL backend for inventory and orders, not just a static catalog. My first full-stack project, front door to database.</div>
-      <!-- PROJECT IMAGE PLACEHOLDER -->
-        <div class="job-image-wrapper">
-          <img src="./assets/traditional-arts.png" alt="First-web-project" class="job-image">
-          <div class="job-image-overlay"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="section-label">// about me</div>
+      <div class="about-wrap">
+        <div class="about-text">
+          <p>I'm <mark>Ravi Teja S</mark>, studying Information Science & Engineering at BMS College of Engineering,
+            graduating 2027.</p>
+          <p>I'm equally happy two layers down in a Kubernetes cluster or two layers up in a product's UI — HPE has me
+            deep in leader election and failover right now, and outside work I keep building smaller things: an AI
+            assistant for government schemes, a parking-violation model trained on Bengaluru data, a from-scratch
+            encryption visualizer. I like problems where the constraint is real and the fix has to actually hold.</p>
         </div>
-      <a class="job-link" href="https://github.com/Ravi-Teja-S/First-web-project" target="_blank" rel="noopener"><span class="arrow">▸</span>view on github</a>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="section-label">// about me</div>
-    <div class="about-wrap">
-      <div class="about-text">
-        <p>I'm <mark>Ravi Teja S</mark>, studying Information Science & Engineering at BMS College of Engineering, graduating 2027.</p>
-        <p>I'm equally happy two layers down in a Kubernetes cluster or two layers up in a product's UI — HPE has me deep in leader election and failover right now, and outside work I keep building smaller things: an AI assistant for government schemes, a parking-violation model trained on Bengaluru data, a from-scratch encryption visualizer. I like problems where the constraint is real and the fix has to actually hold.</p>
+        <div id="portrait" aria-hidden="true">
+          <canvas id="portraitCanvas" width="500" height="500"></canvas>
+        </div>
       </div>
-      <div id="portrait" aria-hidden="true">
-        <canvas id="portraitCanvas" width="500" height="500"></canvas>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <div class="section-label">// internship</div>
+      <div class="row">
+        <div class="yr">march 2026 - july 2026 </div>
+        <div>
+          <div class="what">HPE (Hewlett Packard Enterprise) </div>
+          <div class="sub">CPP(Career Preview Program) Project Intern — Jenkins High Availability on Kubernetes</div>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <div class="section-label">// internship</div>
-    <div class="row">
-      <div class="yr">march 2026 - july 2026 </div>
-      <div>
-        <div class="what">HPE (Hewlett Packard Enterprise) </div>
-        <div class="sub">CPP(Career Preview Program) Project Intern — Jenkins High Availability on Kubernetes</div>
+    </section>
+
+    <!-- HACKATHONS -->
+    <section id="hackathons">
+      <div class="section-label">// hackathons</div>
+
+      <div class="row">
+        <div class="yr">jan 2026</div>
+        <div>
+          <div class="what">IBM SkillsBuild Hackathon</div>
+          <div class="sub">Agentic AI for pest & disease detection in crops — multi-agent system with Langflow + AstraDB
+          </div>
+        </div>
       </div>
-    </div>
-    
-  </section>
-
-  <!-- HACKATHONS -->
-  <section id="hackathons">
-    <div class="section-label">// hackathons</div>
-
-    <div class="row">
-      <div class="yr">jan 2026</div>
-      <div>
-        <div class="what">IBM SkillsBuild Hackathon</div>
-        <div class="sub">Agentic AI for pest & disease detection in crops — multi-agent system with Langflow + AstraDB</div>
+      <div class="row">
+        <div class="yr">may 2025</div>
+        <div>
+          <div class="what">Rotaract Club Hackathon — ROCODE</div>
+          <div class="sub">Sahayak: an AI companion for the elderly, focused on non-technical UX</div>
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="yr">may 2025</div>
-      <div>
-        <div class="what">Rotaract Club Hackathon — ROCODE</div>
-        <div class="sub">Sahayak: an AI companion for the elderly, focused on non-technical UX</div>
+    </section>
+    <!-- EDUCATION -->
+    <section id="education">
+      <div class="section-label">// education</div>
+
+      <div class="row">
+        <div class="yr">2023–2027</div>
+        <div class="edu-cell" id="bmsceCell" title="click to reveal the crest">
+          <div class="what">BMS College of Engineering</div>
+          <div class="sub">B.E., Information Science & Engineering — CGPA 9.75</div>
+        </div>
       </div>
-    </div>
-  </section>
- <!-- EDUCATION -->
-  <section id="education">
-    <div class="section-label">// education</div>
-    
-    <div class="row">
-      <div class="yr">2023–2027</div>
-      <div class="edu-cell" id="bmsceCell" title="click to reveal the crest">
-        <div class="what">BMS College of Engineering</div>
-        <div class="sub">B.E., Information Science & Engineering — CGPA 9.75</div>
+
+      <div class="row">
+        <div class="yr">2019</div>
+        <div class="edu-cell" id="rvceCell" title="click to reveal the crest">
+          <div class="what">RV PU College</div>
+          <div class="sub">Class XII, Karnataka State Board — 96%</div>
+        </div>
       </div>
-    </div>
-    
-    <div class="row">
-      <div class="yr">2019</div>
-      <div class="edu-cell" id="rvceCell" title="click to reveal the crest">
-        <div class="what">RV PU College</div>
-        <div class="sub">Class XII, Karnataka State Board — 96%</div>
+
+      <div class="row">
+        <div class="yr">2017</div>
+        <div class="edu-cell" id="rkvCell" title="click to reveal the crest">
+          <div class="what">Sri Ramakrishna Vidyashala</div>
+          <div class="sub">Class X, Karnataka State Board — 97.6%</div>
+        </div>
       </div>
-    </div>
-    
-    <div class="row">
-      <div class="yr">2017</div>
-      <div class="edu-cell" id="rkvCell" title="click to reveal the crest">
-        <div class="what">Sri Ramakrishna Vidyashala</div>
-        <div class="sub">Class X, Karnataka State Board — 97.6%</div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="section-label">// contact</div>
+      <div class="contact-row">
+        <div class="k">email</div>
+        <div class="v"><a href="mailto:ravithejatheja03@gmail.com">ravithejatheja03@gmail.com</a></div>
       </div>
-    </div>
-  </section>
+      <div class="contact-row">
+        <div class="k">github</div>
+        <div class="v"><a href="https://github.com/Ravi-Teja-S" target="_blank"
+            rel="noopener">github.com/Ravi-Teja-S</a></div>
+      </div>
+      <div class="contact-row">
+        <div class="k">linkedin</div>
+        <div class="v"><a href="https://linkedin.com/in/ravi-teja-satrasala" target="_blank"
+            rel="noopener">linkedin.com/in/ravi-teja-satrasala</a></div>
+      </div>
+      <div class="contact-row">
+        <div class="k">based</div>
+        <div class="v">Bengaluru, India</div>
+      </div>
+    </section>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <div class="section-label">// contact</div>
-    <div class="contact-row"><div class="k">email</div><div class="v"><a href="mailto:ravithejatheja03@gmail.com">ravithejatheja03@gmail.com</a></div></div>
-    <div class="contact-row"><div class="k">github</div><div class="v"><a href="https://github.com/Ravi-Teja-S" target="_blank" rel="noopener">github.com/Ravi-Teja-S</a></div></div>
-    <div class="contact-row"><div class="k">linkedin</div><div class="v"><a href="https://linkedin.com/in/ravi-teja-satrasala" target="_blank" rel="noopener">linkedin.com/in/ravi-teja-satrasala</a></div></div>
-    <div class="contact-row"><div class="k">based</div><div class="v">Bengaluru, India</div></div>
-  </section>
+    <footer>
+      © 2026 ravi teja s · bengaluru, in · <span class="reload" onclick="location.reload()">reload</span> or tap the
+      name for a new look
+    </footer>
 
-  <footer>
-    © 2026 ravi teja s · bengaluru, in · <span class="reload" onclick="location.reload()">reload</span> or tap the name for a new look
-  </footer>
+  </div>
 
-</div>
+  <div class="breadcrumb"><span class="u">[ravi@teja]</span> <span id="crumbPath">› intro</span></div>
+  <div class="progress">
+    <div class="bar">
+      <div class="fill" id="progFill"></div>
+    </div><span id="progPct">0%</span>
+  </div>
 
-<div class="breadcrumb"><span class="u">[ravi@teja]</span> <span id="crumbPath">› intro</span></div>
-<div class="progress"><div class="bar"><div class="fill" id="progFill"></div></div><span id="progPct">0%</span></div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
+
 </html>
